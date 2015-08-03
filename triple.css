@@ -1,0 +1,40 @@
+th, td {
+    border: 1px solid black;
+    padding: 0;
+    margin: 0;
+}
+td{
+	min-width: 50px;
+	height: 50px;
+	text-align: center;
+}
+th{
+}
+.surface{
+	width:100%;
+	border: 2px solid white;
+	border-collapse: collapse;
+
+}
+.board{
+	 display: flex;
+	 flex-direction: column;
+	 justify-content: center;
+	 padding-left: 25px;
+	 padding-right: 25px;
+	 order:2;
+}
+.left-player{
+	display: flex;
+	flex-direction: column;
+	order: 1;
+}
+.right-player{
+	display: flex;
+	flex-direction: column;
+	order: 3;
+}
+body{
+	display: flex;
+	justify-content: center;
+}
