@@ -44,22 +44,34 @@ var nextTurn = function(){
 		$('.right-player form input').attr('disabled',false);
 	}
 }
+var pieceAllowed = function(piece){
+	if(piece == 0)
+		return true;
+	for (var i = allowedPieces[turn].length - 1; i >= 0; i--) {
+		if(allowedPieces[turn][i] == piece)
+			return true;
+	};
+	return false;
+
+}
 var board = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]];
 var levels = ['T','M','B'];
 var symbols = ['X','<i class="fa fa-caret-square-o-up fa-2x"></i>','<i class="fa fa-square-o fa-2x"></i>','<i class="fa fa-circle-o fa-2x"></i>',
 '<i class="fa fa-caret-up fa-2x"></i>','<i class="fa fa-square fa-2x"></i>','<i class="fa fa-circle fa-2x"></i>','<i class="fa fa-star-o fa-2x"></i>','<i class="fa fa-star fa-2x"></i>'];
 var symbolNames = ['','triangle','square','circle','triangle-b','square-b','circle-b','wild','wild-b'];
-var pieces = [3,3,3,3,3,3,1,1]
+var pieces = [3,3,3,3,3,3,1,1];
+var allowedPieces = [[1,2,3,7],[4,5,6,8]];
 var turn = 0;
 var lastBtn = null;
 var phase = 1;
 $(document).ready(function(){
 	$('.right-player form input').attr('disabled',true);
+	$('.left-player form input').attr('disabled',false);
 	update_board(board);
 	$('.grid-btn').click(function() {
 		//initial dist. of pieces
   		if(phase == 1){
-	  		if(pieces[findCurrentSymbol(turn)-1] > 0){
+	  		if(pieces[findCurrentSymbol(turn)-1] > 0 && board[levels.indexOf(this.id[0])][this.id[1]-1] == 0){
 	  			board[levels.indexOf(this.id[0])][this.id[1]-1] = findCurrentSymbol(turn);
 	  			pieces[findCurrentSymbol(turn)-1]--;
 	  			update_board(board);
@@ -74,16 +86,18 @@ $(document).ready(function(){
   		}
   		//all pieces on board
   		else if(phase == 2){
-  			if(lastBtn == null){
+  			var pieceType = board[levels.indexOf(this.id[0])][this.id[1]-1]
+  			if(lastBtn == null && pieceAllowed(pieceType) && pieceType != 0){
   				lastBtn = this;
-  				console.log(this);
+  				$(this).css('background-color','green');
   			}
-  			else{
+  			else if(lastBtn != null && pieceType == 0){
   				var prev = board[levels.indexOf(this.id[0])][this.id[1]-1];
   				board[levels.indexOf(this.id[0])][this.id[1]-1] = board[levels.indexOf(lastBtn.id[0])][lastBtn.id[1]-1];
   				board[levels.indexOf(lastBtn.id[0])][lastBtn.id[1]-1] = prev;
   				update_board(board);
 	  			nextTurn();
+	  			$(lastBtn).css('background-color','white');
 	  			lastBtn = null;
   			}
   		}
