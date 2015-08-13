@@ -51,15 +51,42 @@ var symbols = ['X','<i class="fa fa-caret-square-o-up fa-2x"></i>','<i class="fa
 var symbolNames = ['','triangle','square','circle','triangle-b','square-b','circle-b','wild','wild-b'];
 var pieces = [3,3,3,3,3,3,1,1]
 var turn = 0;
+var lastBtn = null;
+var phase = 1;
 $(document).ready(function(){
 	$('.right-player form input').attr('disabled',true);
 	update_board(board);
 	$('.grid-btn').click(function() {
-  		console.log("Clicked: " + this.id);
-  		board[levels.indexOf(this.id[0])][this.id[1]-1] = findCurrentSymbol(turn);
-  		pieces[findCurrentSymbol(turn)-1]--;
-  		update_board(board);
-  		nextTurn();
+		//initial dist. of pieces
+  		if(phase == 1){
+	  		if(pieces[findCurrentSymbol(turn)-1] > 0){
+	  			board[levels.indexOf(this.id[0])][this.id[1]-1] = findCurrentSymbol(turn);
+	  			pieces[findCurrentSymbol(turn)-1]--;
+	  			update_board(board);
+	  			nextTurn();
+	  			var sum = pieces.reduce(function(a, b) {
+  					return a + b;
+				});
+	  			if(sum == 0){
+	  				phase++;
+	  			}
+	  		}
+  		}
+  		//all pieces on board
+  		else if(phase == 2){
+  			if(lastBtn == null){
+  				lastBtn = this;
+  				console.log(this);
+  			}
+  			else{
+  				var prev = board[levels.indexOf(this.id[0])][this.id[1]-1];
+  				board[levels.indexOf(this.id[0])][this.id[1]-1] = board[levels.indexOf(lastBtn.id[0])][lastBtn.id[1]-1];
+  				board[levels.indexOf(lastBtn.id[0])][lastBtn.id[1]-1] = prev;
+  				update_board(board);
+	  			nextTurn();
+	  			lastBtn = null;
+  			}
+  		}
 	});
 
 });
