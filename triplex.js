@@ -56,8 +56,8 @@ var pieceAllowed = function(piece){
 }
 var board = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]];
 var levels = ['T','M','B'];
-var symbols = ['X','<i class="fa fa-caret-square-o-up fa-2x"></i>','<i class="fa fa-square-o fa-2x"></i>','<i class="fa fa-circle-o fa-2x"></i>',
-'<i class="fa fa-caret-up fa-2x"></i>','<i class="fa fa-square fa-2x"></i>','<i class="fa fa-circle fa-2x"></i>','<i class="fa fa-star-o fa-2x"></i>','<i class="fa fa-star fa-2x"></i>'];
+var symbols = ['X','<i class="fa fa-caret-up left fa-2x"></i>','<i class="fa fa-square left fa-2x"></i>','<i class="fa fa-circle left fa-2x"></i>',
+'<i class="fa fa-caret-up right fa-2x"></i>','<i class="fa fa-square right fa-2x"></i>','<i class="fa fa-circle right fa-2x"></i>','<i class="fa fa-star left fa-2x"></i>','<i class="fa fa-star right fa-2x"></i>'];
 var symbolNames = ['','triangle','square','circle','triangle-b','square-b','circle-b','wild','wild-b'];
 var pieces = [3,3,3,3,3,3,1,1];
 var allowedPieces = [[1,2,3,7],[4,5,6,8]];
