@@ -208,7 +208,10 @@ $(document).ready(function(){
   		//all pieces on board
   		else if(phase == 2){
   			var pieceType = board[levels.indexOf(this.id[0])][this.id[1]-1]
-  			if(lastBtn == null && pieceAllowed(pieceType) && pieceType != 0){
+  			if(pieceAllowed(pieceType) && pieceType != 0){
+  				if(lastBtn != null){
+  					$(lastBtn).css('background-color','#F0F0F0');
+  				}
   				lastBtn = this;
   				$(this).css('background-color','green');
   			}
