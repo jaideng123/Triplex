@@ -1,3 +1,4 @@
+//updates graphical board
 var update_board = function(board){
 	for (var i = board.length - 1; i >= 0; i--) {
 		for (var j = board[i].length - 1; j >= 0; j--) {
@@ -19,12 +20,14 @@ var update_board = function(board){
 			rightVals.eq(i).html(pieces[i+3]);
 	};
 };
+//grabs currently selected shape
 var findCurrentSymbol = function(turn){
 	if(turn == 0)
   		return symbolNames.indexOf($('input[name="shape-left"]:checked').val());
   	if(turn == 1)
   		return symbolNames.indexOf($('input[name="shape-right"]:checked').val());
 };
+//move to next turn
 var nextTurn = function(){
 	if(turn == 0){
 		$('.active-player#p1').css('visibility','hidden')
@@ -44,6 +47,7 @@ var nextTurn = function(){
 		$('.right-player form input').attr('disabled',false);
 	}
 }
+//checks if piece is owned by current player
 var pieceAllowed = function(piece){
 	if(piece == 0)
 		return true;
@@ -52,7 +56,111 @@ var pieceAllowed = function(piece){
 			return true;
 	};
 	return false;
-
+}
+var markMatched = function(i,j,player){
+	if(player == 0){
+		$('#'+levels[i]+(j+1)).addClass('marked-blue')
+	}
+	if(player == 1){
+		$('#'+levels[i]+(j+1)).addClass('marked-red')
+	}
+}
+//checks for matches in all directions
+var findLine = function(piece,board,i,j){
+	var wildCard = 7;
+	if(piece > 3 && piece != 7)
+		wildCard = 8;
+	//check up/down boards
+	if(i == 0){
+		if((board[i+1][j] == piece || board[i+1][j] == wildCard) && (board[i+2][j] == piece || board[i+2][j] == wildCard)){
+			markMatched(i,j,wildCard-7);
+			markMatched(i+1,j,wildCard-7);
+			markMatched(i+2,j,wildCard-7);
+			return true;
+		}
+	}
+	else if(i == 1){
+		if((board[i-1][j] == piece || board[i-1][j] == wildCard) && (board[i+1][j] == piece || board[i+1][j] == wildCard)){
+			markMatched(i,j,wildCard-7);
+			markMatched(i-1,j,wildCard-7);
+			markMatched(i+1,j,wildCard-7);
+			return true;
+		}
+	}
+	else if(i == 2){
+		if((board[i-1][j] == piece || board[i-1][j] == wildCard) && (board[i-2][j] == piece || board[i-2][j] == wildCard)){
+			markMatched(i,j,wildCard-7);
+			markMatched(i-1,j,wildCard-7);
+			markMatched(i-2,j,wildCard-7);
+			return true;
+		}
+	}
+	//check vertically
+	if(j < 3){
+		if((board[i][j+3] == piece || board[i][j+3] == wildCard) && (board[i][j+6] == piece || board[i][j+6] == wildCard)){
+			markMatched(i,j,wildCard-7);
+			markMatched(i,j+3,wildCard-7);
+			markMatched(i,j+6,wildCard-7);
+			return true;
+		}
+	}
+	else if(j < 6){
+		if((board[i][j+3] == piece || board[i][j+3] == wildCard) && (board[i][j-3] == piece || board[i][j-3] == wildCard)){
+			markMatched(i,j,wildCard-7);
+			markMatched(i,j+3,wildCard-7);
+			markMatched(i,j-3,wildCard-7);
+			return true;
+		}
+	}
+	else{
+		if((board[i][j-6] == piece || board[i][j-6] == wildCard) && (board[i][j-3] == piece || board[i][j-3] == wildCard)){
+			markMatched(i,j,wildCard-7);
+			markMatched(i,j-3,wildCard-7);
+			markMatched(i,j-6,wildCard-7);
+			return true;
+		}
+	}
+	//check horizontally
+	if(j % 3 == 0){
+		if((board[i][j+1] == piece || board[i][j+1] == wildCard) && (board[i][j+2] == piece || board[i][j+2] == wildCard)){
+			markMatched(i,j,wildCard-7);
+			markMatched(i,j+1,wildCard-7);
+			markMatched(i,j+2,wildCard-7);
+			return true;
+		}
+	}
+	else if(j % 3 == 1){
+		if((board[i][j+1] == piece || board[i][j+1] == wildCard) && (board[i][j-1] == piece || board[i][j-1] == wildCard)){
+			markMatched(i,j,wildCard-7);
+			markMatched(i,j+1,wildCard-7);
+			markMatched(i,j-1,wildCard-7);
+			return true;
+		}
+	}
+	else if(j % 3 == 2){
+		if((board[i][j-1] == piece || board[i][j-1] == wildCard) && (board[i][j-2] == piece || board[i][j-2] == wildCard)){
+			markMatched(i,j,wildCard-7);
+			markMatched(i,j-1,wildCard-7);
+			markMatched(i,j-2,wildCard-7);
+			return true;
+		}
+	}
+	return false;
+}
+//checks board for matched pieces
+var checkBoard = function(board){
+	var matched = [0,0,0,0,0,0]
+	$(".grid-btn").removeClass('marked-red');
+	$(".grid-btn").removeClass('marked-blue');
+	for (var i = board.length - 1; i >= 0; i--) {
+		for (var j = board[i].length - 1; j >= 0; j--) {
+			if(board[i][j] != 0){
+				if(findLine(board[i][j],board,i,j))
+					matched[board[i][j]-1] = 1;
+			}
+		};
+	};
+	return matched;
 }
 var board = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]];
 var levels = ['T','M','B'];
@@ -75,12 +183,25 @@ $(document).ready(function(){
 	  			board[levels.indexOf(this.id[0])][this.id[1]-1] = findCurrentSymbol(turn);
 	  			pieces[findCurrentSymbol(turn)-1]--;
 	  			update_board(board);
-	  			nextTurn();
-	  			var sum = pieces.reduce(function(a, b) {
-  					return a + b;
-				});
-	  			if(sum == 0){
-	  				phase++;
+	  			var score = checkBoard(board);
+	  			if(score[0] == 1 && score[1] == 1 && score[2] == 1){
+	  				$('.active-player').css('visibility','hidden')
+	  				console.log("Blue Player Wins!");
+	  				phase = 3;
+	  			}
+	  			else if(score[3] == 1 && score[4] == 1 && score[5] == 1){
+	  				$('.active-player').css('visibility','hidden')
+	  				console.log("Red Player Wins!");
+	  				phase = 3;
+	  			}
+	  			else{
+		  			nextTurn();
+		  			var sum = pieces.reduce(function(a, b) {
+	  					return a + b;
+					});
+		  			if(sum == 0){
+		  				phase++;
+		  			}
 	  			}
 	  		}
   		}
@@ -96,10 +217,26 @@ $(document).ready(function(){
   				board[levels.indexOf(this.id[0])][this.id[1]-1] = board[levels.indexOf(lastBtn.id[0])][lastBtn.id[1]-1];
   				board[levels.indexOf(lastBtn.id[0])][lastBtn.id[1]-1] = prev;
   				update_board(board);
-	  			nextTurn();
-	  			$(lastBtn).css('background-color','white');
+  				$(lastBtn).css('background-color','white');
 	  			lastBtn = null;
+	  			var score = checkBoard(board);
+	  			if(score[0] == 1 && score[1] == 1 && score[2] == 1){
+	  				$('.active-player').css('visibility','hidden')
+	  				$('.winner').text("Blue Player Wins!");
+	  				phase = 3;
+	  			}
+	  			else if(score[3] == 1 && score[4] == 1 && score[5] == 1){
+	  				$('.active-player').css('visibility','hidden')
+	  				$('.winner').text("Red Player Wins!");
+	  				phase = 3;
+	  			}
+	  			else
+	  				nextTurn();
   			}
+  		}
+  		//game finished
+  		else if(phase == 3){
+
   		}
 	});
 
