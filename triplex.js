@@ -217,7 +217,7 @@ $(document).ready(function(){
   				board[levels.indexOf(this.id[0])][this.id[1]-1] = board[levels.indexOf(lastBtn.id[0])][lastBtn.id[1]-1];
   				board[levels.indexOf(lastBtn.id[0])][lastBtn.id[1]-1] = prev;
   				update_board(board);
-  				$(lastBtn).css('background-color','white');
+  				$(lastBtn).css('background-color','#F0F0F0');
 	  			lastBtn = null;
 	  			var score = checkBoard(board);
 	  			if(score[0] == 1 && score[1] == 1 && score[2] == 1){
