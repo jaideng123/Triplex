@@ -201,6 +201,9 @@ $(document).ready(function(){
 					});
 		  			if(sum == 0){
 		  				phase++;
+		  				$("form i").css("background", "none");
+		  				$("form i").css("color", "grey");
+		  				$("form").css("color", "grey");
 		  			}
 	  			}
 	  		}
