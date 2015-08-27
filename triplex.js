@@ -40,11 +40,13 @@ var nextTurn = function(){
 	turn = (turn + 1)% 2
 	if(turn == 0){
 		$('.active-player#p1').css('visibility','visible')
-		$('.left-player form input').attr('disabled',false);
+		if(phase == 1)
+			$('.left-player form input').attr('disabled',false);
 	}
 	else if(turn == 1){
 		$('.active-player#p2').css('visibility','visible')
-		$('.right-player form input').attr('disabled',false);
+		if(phase == 1)
+			$('.right-player form input').attr('disabled',false);
 	}
 }
 //checks if piece is owned by current player
@@ -204,6 +206,8 @@ $(document).ready(function(){
 		  				$("form i").css("background", "none");
 		  				$("form i").css("color", "grey");
 		  				$("form").css("color", "grey");
+		  				$("form").css("color", "grey");
+		  				$("form input").prop("disabled", true);
 		  			}
 	  			}
 	  		}
