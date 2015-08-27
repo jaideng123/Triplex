@@ -12,7 +12,6 @@
 <div class="center">
 <div class="board">
     <div class="label">Top:</div>
-    <br/>
     <table class= "surface top">
         <tr>
             <td><button class="grid-btn" value ="T1" id ="T1"></button></td>
@@ -31,7 +30,6 @@
         </tr>
     </table>
     <div class="label">Mid:</div>
-    <br/>
     <table class= "surface middle">
          <tr>
             <td><button class="grid-btn" value ="M1" id ="M1"></button></td>
@@ -50,7 +48,6 @@
         </tr>
     </table>
     <div class="label">Bot:</div>
-    <br/>
     <table class= "surface bottom">
          <tr>
             <td><button class="grid-btn" value ="B1" id ="B1"></button></td>
@@ -74,13 +71,20 @@
 <div class="left-player">
 Player 1
 <form action="" id="left">
-(<span class="remaining">3</span>)<input type="radio" name="shape-left" value="triangle" id = "tb"> 
+<span class= "remain-counter">(<span class="remaining">3</span>)</span>
+<input type="radio" name="shape-left" value="triangle" id = "tb"> 
 <label for = "tb"><i class="fa fa-caret-up left fa-2x"></i></label><br>
-(<span class="remaining">3</span>)<input type="radio" name="shape-left" value="square" id = "sb"> 
+
+<span class= "remain-counter">(<span class="remaining">3</span>)</span>
+<input type="radio" name="shape-left" value="square" id = "sb"> 
 <label for = "sb"><i class="fa fa-square left fa-2x"></i></label><br>
-(<span class="remaining">3</span>)<input type="radio" name="shape-left" value="circle" id = "cb"> 
+
+<span class= "remain-counter">(<span class="remaining">3</span>)</span>
+<input type="radio" name="shape-left" value="circle" id = "cb"> 
 <label for = "cb"><i class="fa fa-circle left fa-2x"></i></label><br>
-(<span class="remaining">1</span>)<input type="radio" name="shape-left" value="wild" id= "cw"> 
+
+<span class= "remain-counter">(<span class="remaining">1</span>)</span>
+<input type="radio" name="shape-left" value="wild" id= "cw"> 
 <label for = "cw"><i class="fa fa-star left fa-2x"></i></label><br>
 </form>
 <span class="active-player" id="p1">Your Turn</span>
@@ -88,14 +92,22 @@ Player 1
 <div class="right-player">
 Player 2
 <form action="" id='right'>
-(<span class="remaining">3</span>)<input type="radio" name="shape-right" value="triangle-b" id = "tr"> 
+<span class= "remain-counter">(<span class="remaining">3</span>)</span>
+<input type="radio" name="shape-right" value="triangle-b" id = "tr"> 
 <label for = "tr"><i class="fa fa-caret-up right fa-2x"></i></label><br>
-(<span class="remaining">3</span>)<input type="radio" name="shape-right" value="square-b" id = "sr"> 
+
+<span class= "remain-counter">(<span class="remaining">3</span>)</span>
+<input type="radio" name="shape-right" value="square-b" id = "sr"> 
 <label for = "sr"><i class="fa fa-square right fa-2x"></i></label><br>
-(<span class="remaining">3</span>)<input type="radio" name="shape-right" value="circle-b" id = "cr"> 
+
+<span class= "remain-counter">(<span class="remaining">3</span>)</span>
+<input type="radio" name="shape-right" value="circle-b" id = "cr"> 
 <label for = "cr"><i class="fa fa-circle right fa-2x"></i></label><br>
-(<span class="remaining">1</span>)<input type="radio" name="shape-right" value="wild-b" id = "wr"> 
+
+<span class= "remain-counter">(<span class="remaining">1</span>)</span>
+<input type="radio" name="shape-right" value="wild-b" id = "wr"> 
 <label for = "wr"><i class="fa fa-star right fa-2x"></i></label><br>
+
 </form>
 <span class="active-player" id="p2">Your Turn</span>
 </div>
